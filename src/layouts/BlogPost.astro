@@ -1,0 +1,128 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} image={heroImage}>
+	<article>
+		<div class="hero-image">
+			{heroImage && <img width={1020} height={510} src={heroImage} alt={title} />}
+		</div>
+		<div class="prose">
+			<div class="title">
+				<div class="date">
+					<FormattedDate date={pubDate} />
+					{
+						updatedDate && (
+							<div class="last-updated-on">
+								Last updated on <FormattedDate date={updatedDate} />
+							</div>
+						)
+					}
+				</div>
+				<h1>{title}</h1>
+				<hr />
+			</div>
+			<slot />
+		</div>
+	</article>
+</BaseLayout>
+
+<style>
+	article {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.hero-image {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+
+	.hero-image img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 12px;
+		box-shadow: var(--box-shadow);
+	}
+
+	.prose {
+		padding: 1rem;
+	}
+
+	.title {
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	.title h1 {
+		margin: 0.5rem 0;
+		font-size: 2.5rem;
+	}
+
+	.date {
+		margin-bottom: 0.5rem;
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+	}
+
+	.last-updated-on {
+		font-style: italic;
+	}
+
+	hr {
+		border: none;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.prose :global(h2) {
+		margin-top: 2rem;
+		font-size: 1.8rem;
+	}
+
+	.prose :global(h3) {
+		margin-top: 1.5rem;
+		font-size: 1.4rem;
+	}
+
+	.prose :global(p) {
+		margin: 1rem 0;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		margin: 1rem 0;
+		padding-left: 2rem;
+	}
+
+	.prose :global(li) {
+		margin: 0.5rem 0;
+	}
+
+	.prose :global(code) {
+		background: rgb(var(--gray-light));
+		padding: 0.2rem 0.4rem;
+		border-radius: 4px;
+		font-size: 0.9em;
+	}
+
+	.prose :global(pre) {
+		background: rgb(var(--gray-dark));
+		color: rgb(var(--gray-light));
+		padding: 1rem;
+		border-radius: 8px;
+		overflow-x: auto;
+		margin: 1rem 0;
+	}
+
+	.prose :global(pre code) {
+		background: none;
+		padding: 0;
+	}
+</style>

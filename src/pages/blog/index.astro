@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Blog" description="All blog posts">
+	<div class="blog-list">
+		<h1>All Blog Posts</h1>
+		<ul>
+			{
+				posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.slug}/`}>
+							<div class="post-card">
+								{post.data.heroImage && (
+									<img width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+								)}
+								<div class="post-content">
+									<h2>{post.data.title}</h2>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+									<p class="description">{post.data.description}</p>
+								</div>
+							</div>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</BaseLayout>
+
+<style>
+	.blog-list {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 2rem;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	li {
+		margin-bottom: 2rem;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.post-card {
+		background: white;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: var(--box-shadow);
+		transition: transform 0.2s, box-shadow 0.2s;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.post-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 4px 12px rgba(var(--gray), 40%), 0 12px 32px rgba(var(--gray), 40%);
+	}
+
+	.post-card img {
+		width: 100%;
+		height: 300px;
+		object-fit: cover;
+	}
+
+	.post-content {
+		padding: 1.5rem;
+	}
+
+	h2 {
+		font-size: 1.8rem;
+		color: var(--accent-dark);
+		margin-bottom: 0.5rem;
+	}
+
+	.date {
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+		margin-bottom: 1rem;
+	}
+
+	.description {
+		line-height: 1.6;
+		color: rgb(var(--gray-dark));
+	}
+</style>

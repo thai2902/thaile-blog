@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="About Thai Le and this blog">
+	<div class="about">
+		<h1>About Me</h1>
+		<p>
+			Hi! I'm Thai Le, and this is my personal blog. I'm passionate about web development,
+			modern technologies, and creating great user experiences.
+		</p>
+
+		<h2>About This Blog</h2>
+		<p>
+			This blog is built with <a href="https://astro.build" target="_blank">Astro</a>, a modern
+			static site generator that focuses on performance and developer experience.
+		</p>
+
+		<h3>Technologies Used</h3>
+		<ul>
+			<li>Astro - Static Site Generator</li>
+			<li>TypeScript - Type Safety</li>
+			<li>MDX - Enhanced Markdown</li>
+			<li>RSS - Content Syndication</li>
+		</ul>
+
+		<h2>Get in Touch</h2>
+		<p>
+			Feel free to connect with me on social media or check out my projects on GitHub!
+		</p>
+	</div>
+</BaseLayout>
+
+<style>
+	.about {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem;
+		background: white;
+		border-radius: 12px;
+		box-shadow: var(--box-shadow);
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		color: var(--accent-dark);
+		margin-bottom: 1.5rem;
+	}
+
+	h2 {
+		margin-top: 2rem;
+		color: var(--accent);
+	}
+
+	h3 {
+		margin-top: 1.5rem;
+	}
+
+	p {
+		margin: 1rem 0;
+		line-height: 1.8;
+	}
+
+	ul {
+		margin: 1rem 0;
+		padding-left: 2rem;
+	}
+
+	li {
+		margin: 0.5rem 0;
+	}
+
+	a {
+		color: var(--accent);
+		text-decoration: none;
+		font-weight: 500;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+</style>

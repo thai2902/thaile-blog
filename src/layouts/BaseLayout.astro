@@ -1,0 +1,132 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+}
+
+const { title, description, image = '/blog-placeholder-about.jpg' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<h2><a href="/">Thai Le's Blog</a></h2>
+				<div class="nav-links">
+					<a href="/">Home</a>
+					<a href="/blog">Blog</a>
+					<a href="/about">About</a>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer>
+			<p>&copy; {new Date().getFullYear()} Thai Le's Blog. Built with Astro.</p>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--accent: #2337ff;
+		--accent-dark: #000d8a;
+		--black: 15, 18, 25;
+		--gray: 96, 115, 159;
+		--gray-light: 229, 233, 240;
+		--gray-dark: 34, 41, 57;
+		--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+		--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+			0 16px 32px rgba(var(--gray), 33%);
+	}
+
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		color: rgb(var(--gray-dark));
+		background: linear-gradient(var(--gray-gradient));
+		line-height: 1.6;
+	}
+
+	header {
+		background: white;
+		box-shadow: 0 2px 8px rgba(var(--gray), 10%);
+		padding: 1rem 2rem;
+		margin-bottom: 2rem;
+	}
+
+	nav {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	nav h2 a {
+		color: var(--accent);
+		text-decoration: none;
+		font-size: 1.5rem;
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 2rem;
+	}
+
+	.nav-links a {
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.2s;
+	}
+
+	.nav-links a:hover {
+		color: var(--accent);
+	}
+
+	main {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 2rem;
+		min-height: calc(100vh - 200px);
+	}
+
+	footer {
+		background: rgb(var(--gray-dark));
+		color: white;
+		text-align: center;
+		padding: 2rem;
+		margin-top: 4rem;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		margin: 1rem 0;
+		line-height: 1.2;
+	}
+
+	a {
+		color: var(--accent);
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+</style>

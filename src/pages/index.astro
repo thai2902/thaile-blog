@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+	title="Thai Le's Blog"
+	description="A personal blog about technology, coding, and more"
+>
+	<section>
+		<h1>Welcome to Thai Le's Blog</h1>
+		<p>
+			This is a personal blog built with Astro, featuring posts about web development,
+			technology, and my journey as a developer.
+		</p>
+	</section>
+
+	<section class="blog-posts">
+		<h2>Recent Posts</h2>
+		<ul>
+			{
+				posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.slug}/`}>
+							{post.data.heroImage && (
+								<img width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+							)}
+							<h3>{post.data.title}</h3>
+							<p class="date">
+								<FormattedDate date={post.data.pubDate} />
+							</p>
+							<p>{post.data.description}</p>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</BaseLayout>
+
+<style>
+	section {
+		margin: 2rem 0;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.blog-posts ul {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 2rem;
+		list-style-type: none;
+		padding: 0;
+	}
+
+	.blog-posts li {
+		background: white;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: var(--box-shadow);
+		transition: transform 0.2s, box-shadow 0.2s;
+	}
+
+	.blog-posts li:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 4px 12px rgba(var(--gray), 40%), 0 12px 32px rgba(var(--gray), 40%);
+	}
+
+	.blog-posts a {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+
+	.blog-posts img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+
+	.blog-posts h3 {
+		margin: 1rem;
+		font-size: 1.5rem;
+		color: var(--accent-dark);
+	}
+
+	.blog-posts p {
+		margin: 0 1rem 1rem;
+	}
+
+	.blog-posts .date {
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+	}
+</style>
