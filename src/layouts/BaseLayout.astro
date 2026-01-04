@@ -1,11 +1,13 @@
 ---
+import { DEFAULT_OG_IMAGE } from '../consts';
+
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
 }
 
-const { title, description, image = '/blog-placeholder-about.jpg' } = Astro.props;
+const { title, description, image = DEFAULT_OG_IMAGE } = Astro.props;
 ---
 
 <!doctype html>
